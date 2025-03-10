@@ -55,4 +55,16 @@ function highlightEmployeeCards() {
 }
 
 
+// Task 4 - Employee Card Removal with Event Bubbling
+
+document.getElementById("employeeContainer").addEventListener("click", function(event) {
+    if (event.target.classList.contains("remove-btn")) {
+        event.stopPropagation(); // Prevents bubbling
+        event.target.parentElement.remove();
+    } else {
+        console.log("Employee card clicked!");
+    }
+});
+
+
 
