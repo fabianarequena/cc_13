@@ -1,4 +1,4 @@
-// Task 2: Adding Employee Cards Dynamically
+// Task 2 - Adding Employee Cards Dynamically
 function addEmployeeCard(name, position) {
     const container = document.getElementById("employeeContainer");
     
@@ -36,7 +36,7 @@ function addEmployeeCard(name, position) {
     container.appendChild(card);
 }
 
-// Task 3: Bulk Update on Employee Cards
+// Task 3 - Bulk Update on Employee Cards
 function highlightAllEmployees() {
     const cards = Array.from(document.querySelectorAll(".employee-card"));
     cards.forEach(card => {
