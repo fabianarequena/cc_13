@@ -44,12 +44,12 @@ function highlightAllEmployees() {
     });
 }
 
-// Task 4: Implementing Removal of Employee Cards with Event Bubbling
+// Task 4 - Implementing Removal of Employee Cards with Event Bubbling
 document.getElementById("employeeContainer").addEventListener("click", function() {
     console.log("An employee card was clicked!");
 });
 
-// Task 5: Inline Editing of Employee Details
+// Task 5 - Inline Editing of Employee Details
 function editEmployeeCard(card, nameElement, positionElement) {
     const nameInput = document.createElement("input");
     nameInput.type = "text";
