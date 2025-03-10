@@ -1,70 +1,80 @@
-// Task 2 - Employee Cards Dynamic Addition
-
-// Select the container where employee cards will be added
-const employeeContainer = document.getElementById("employeeContainer");
-
-// Function to add an employee card
+// Task 2: Adding Employee Cards Dynamically
 function addEmployeeCard(name, position) {
-    // Create the card
+    const container = document.getElementById("employeeContainer");
+    
+    // Create employee card
     const card = document.createElement("div");
-    card.setAttribute("class", "employee-card");
-
-    // Create name heading
-    const nameHeading = document.createElement("h3");
-    nameHeading.textContent = name;
-
-    // Create position paragraph
-    const positionParagraph = document.createElement("p");
-    positionParagraph.textContent = position;
-
-    // Create remove button
-    const removeButton = document.createElement('button');
-    removeButton.textContent = 'Remove';
-    removeButton.onclick = function(event) {
-        card.remove(); // Remove the card when clicked
-        event.stopPropagation(); // Prevent bubbling
-    };
-
-    // Append all elements to the card
-    card.appendChild(nameHeading);
-    card.appendChild(positionParagraph);
+    card.classList.add("employee-card");
+    
+    // Employee name
+    const employeeName = document.createElement("h3");
+    employeeName.textContent = name;
+    
+    // Employee position
+    const employeePosition = document.createElement("p");
+    employeePosition.textContent = position;
+    
+    // Remove button
+    const removeButton = document.createElement("button");
+    removeButton.textContent = "Remove";
+    removeButton.addEventListener("click", function(event) {
+        event.stopPropagation(); // Prevent event bubbling
+        container.removeChild(card);
+    });
+    
+    // Edit functionality
+    card.addEventListener("dblclick", function() {
+        editEmployeeCard(card, employeeName, employeePosition);
+    });
+    
+    // Append elements to card
+    card.appendChild(employeeName);
+    card.appendChild(employeePosition);
     card.appendChild(removeButton);
-
-    // Append the card to the container
-    employeeContainer.appendChild(card);
+    
+    // Append card to container
+    container.appendChild(card);
 }
 
-// Test: Adding an employee card
-addEmployeeCard("Sophia Kirschner", "Account Executive");
-addEmployeeCard("Fabiana Requena", "Account Director");
-
-// Task 3 - Bulk Update on Employee Cards
-
-// Function to highlight all employee cards
-function highlightEmployeeCards() {
-    // Select all employee cards using querySelectorAll
-    const employeeCards = document.querySelectorAll('.employee-card');
-
-    // Convert NodeList to Array using Array.from()
-    const employeeCardsArray = Array.from(employeeCards);
-
-    // Use .forEach() to loop through each card and add the highlight class
-    employeeCardsArray.forEach(function(card) {
-        card.classList.add('highlight'); // Add the highlight class to each card
+// Task 3: Bulk Update on Employee Cards
+function highlightAllEmployees() {
+    const cards = Array.from(document.querySelectorAll(".employee-card"));
+    cards.forEach(card => {
+        card.classList.add("highlight"); // Assume 'highlight' class is defined in CSS
     });
 }
 
-
-// Task 4 - Employee Card Removal with Event Bubbling
-
-document.getElementById("employeeContainer").addEventListener("click", function(event) {
-    if (event.target.classList.contains("remove-btn")) {
-        event.stopPropagation(); // Prevents bubbling
-        event.target.parentElement.remove();
-    } else {
-        console.log("Employee card clicked!");
-    }
+// Task 4: Implementing Removal of Employee Cards with Event Bubbling
+document.getElementById("employeeContainer").addEventListener("click", function() {
+    console.log("An employee card was clicked!");
 });
 
+// Task 5: Inline Editing of Employee Details
+function editEmployeeCard(card, nameElement, positionElement) {
+    const nameInput = document.createElement("input");
+    nameInput.type = "text";
+    nameInput.value = nameElement.textContent;
+    
+    const positionInput = document.createElement("input");
+    positionInput.type = "text";
+    positionInput.value = positionElement.textContent;
+    
+    const saveButton = document.createElement("button");
+    saveButton.textContent = "Save";
+    saveButton.addEventListener("click", function() {
+        nameElement.textContent = nameInput.value;
+        positionElement.textContent = positionInput.value;
+        
+        card.replaceChild(nameElement, nameInput);
+        card.replaceChild(positionElement, positionInput);
+        card.replaceChild(removeButton, saveButton);
+    });
+    
+    card.replaceChild(nameInput, nameElement);
+    card.replaceChild(positionInput, positionElement);
+    card.replaceChild(saveButton, card.querySelector("button"));
+}
 
-
+// Example usage
+addEmployeeCard("Fabiana Requena", "Account Executive");
+addEmployeeCard("Sophia Kirschner", "Account Manager");
