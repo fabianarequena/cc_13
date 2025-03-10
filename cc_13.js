@@ -1,4 +1,4 @@
-// Task 2 - Adding Employee Cards Dynamically
+// Task 2: Adding Employee Cards Dynamically
 function addEmployeeCard(name, position) {
     const container = document.getElementById("employeeContainer");
     
@@ -23,20 +23,23 @@ function addEmployeeCard(name, position) {
     });
     
     // Edit functionality
-    card.addEventListener("dblclick", function() {
-        editEmployeeCard(card, employeeName, employeePosition);
+    const editButton = document.createElement("button");
+    editButton.textContent = "Edit";
+    editButton.addEventListener("click", function() {
+        editEmployeeCard(card, employeeName, employeePosition, removeButton, editButton);
     });
     
     // Append elements to card
     card.appendChild(employeeName);
     card.appendChild(employeePosition);
+    card.appendChild(editButton);
     card.appendChild(removeButton);
     
     // Append card to container
     container.appendChild(card);
 }
 
-// Task 3 - Bulk Update on Employee Cards
+// Task 3: Bulk Update on Employee Cards
 function highlightAllEmployees() {
     const cards = Array.from(document.querySelectorAll(".employee-card"));
     cards.forEach(card => {
@@ -44,13 +47,13 @@ function highlightAllEmployees() {
     });
 }
 
-// Task 4 - Implementing Removal of Employee Cards with Event Bubbling
+// Task 4: Implementing Removal of Employee Cards with Event Bubbling
 document.getElementById("employeeContainer").addEventListener("click", function() {
     console.log("An employee card was clicked!");
 });
 
-// Task 5 - Inline Editing of Employee Details
-function editEmployeeCard(card, nameElement, positionElement) {
+// Task 5: Inline Editing of Employee Details
+function editEmployeeCard(card, nameElement, positionElement, removeButton, editButton) {
     const nameInput = document.createElement("input");
     nameInput.type = "text";
     nameInput.value = nameElement.textContent;
@@ -67,12 +70,15 @@ function editEmployeeCard(card, nameElement, positionElement) {
         
         card.replaceChild(nameElement, nameInput);
         card.replaceChild(positionElement, positionInput);
-        card.replaceChild(removeButton, saveButton);
+        card.replaceChild(editButton, saveButton);
+        
+        card.appendChild(editButton);
+        card.appendChild(removeButton);
     });
     
     card.replaceChild(nameInput, nameElement);
     card.replaceChild(positionInput, positionElement);
-    card.replaceChild(saveButton, card.querySelector("button"));
+    card.replaceChild(saveButton, editButton);
 }
 
 // Example usage
